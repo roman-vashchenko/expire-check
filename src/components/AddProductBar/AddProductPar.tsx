@@ -7,16 +7,18 @@ import type { FC } from "react";
 
 interface FormValues {
   code: string;
+  name: string;
   date: string;
 }
 
 interface AddProductBarProps {
-  addProduct: (data: { code: string; date: string }) => void;
+  addProduct: (data: { code: string; name: string; date: string }) => void;
 }
 
 const schema = yup
   .object({
-    code: yup.string().max(8).required(),
+    code: yup.string().min(8).max(8).required(),
+    name: yup.string().required(),
     date: yup.string().required(),
   })
   .required();
@@ -41,7 +43,19 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <div className={css.field}>
-          <input type="number" {...register("code")} placeholder="Актикул" />
+          <input
+            type="number"
+            {...register("code")}
+            placeholder="Введіть акрикул"
+          />
+          <p style={{ color: "rgb(216, 0, 39)" }}>{errors.code?.message}</p>
+        </div>
+        <div className={css.field}>
+          <input
+            type="text"
+            {...register("name")}
+            placeholder="Введіть назву"
+          />
           <p style={{ color: "rgb(216, 0, 39)" }}>{errors.code?.message}</p>
         </div>
         <div className={css.field}>

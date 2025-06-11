@@ -1,0 +1,48 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.table td,
+.table tr {
+  border: 1px solid #333;
+}
+
+.title th {
+  border: 3px solid #333;
+}
+
+.title th {
+  font-size: 10px;
+}
+
+.table th:nth-child(1) {
+  width: 70px;
+}
+
+.table th:nth-child(2) {
+  min-width: 100px;
+}
+
+.table th:nth-child(3) {
+  width: 70px;
+}
+
+.table th:last-child {
+  width: 50px;
+}
+
+@media (min-width: 768px) {
+  .table th:nth-child(1) {
+    width: 150px;
+  }
+
+  .table th:nth-child(2) {
+    min-width: 250px;
+  }
+
+  .table th:nth-child(3) {
+    width: 150px;
+  }
+}

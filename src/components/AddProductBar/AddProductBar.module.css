@@ -1,3 +1,9 @@
+.form {
+  border: 1px solid black;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
 .field {
   margin-bottom: 5px;
 }

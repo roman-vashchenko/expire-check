@@ -1,5 +1,9 @@
 import { getDatabase, type Database } from "firebase/database";
-import { initializeApp, type FirebaseOptions } from "firebase/app";
+import {
+  initializeApp,
+  type FirebaseApp,
+  type FirebaseOptions,
+} from "firebase/app";
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: "AIzaSyBA3JxLHr4FXf6j0wmkGRzq8Imyc0UvveU",
@@ -13,6 +17,5 @@ const firebaseConfig: FirebaseOptions = {
   measurementId: "G-N7LMVBL1B2",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app: FirebaseApp = initializeApp(firebaseConfig);
 export const db: Database = getDatabase(app);
