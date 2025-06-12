@@ -87,7 +87,7 @@ function App() {
   return (
     <div>
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
-        Контроль прострочення товара
+        Контроль прострочення товарів
       </h1>
       <AddProductPar addProduct={addProduct} loader={loader} />
       {/* <Filter

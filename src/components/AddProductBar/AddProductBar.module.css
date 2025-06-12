@@ -41,7 +41,8 @@
 
 .btn {
   display: block;
-  width: 150px;
+  width: 125px;
+  font-size: 14px;
   margin: 0 auto;
   border-radius: 5px;
   border-color: transparent;
@@ -61,7 +62,7 @@
   left: 38%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .form {
     flex-direction: row;
     gap: 35px;
