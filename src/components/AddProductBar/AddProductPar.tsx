@@ -13,6 +13,7 @@ interface FormValues {
 
 interface AddProductBarProps {
   addProduct: (data: { code: string; name: string; date: string }) => void;
+  loader: boolean;
 }
 
 const schema = yup
@@ -23,7 +24,7 @@ const schema = yup
   })
   .required();
 
-const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
+const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
   const {
     register,
     handleSubmit,
@@ -71,6 +72,7 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
           Додати
         </button>
       </form>
+      {loader && <p className={css.loader}>Завантаження...</p>}
     </div>
   );
 };

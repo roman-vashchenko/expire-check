@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loader, setLoader] = useState<boolean>(true);
   // const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
   }, []);
 
   const getProducts = async (): Promise<void> => {
+    setLoader(true);
     try {
       const productsRef = ref(db, "products");
       const snapshot = await get(productsRef);
@@ -23,8 +25,10 @@ function App() {
       const exists: Product[] = data ? Object.values(data) : [];
       setProducts(exists);
       console.log(exists);
+      setLoader(false);
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   };
 
@@ -33,6 +37,7 @@ function App() {
     name: string;
     date: string;
   }) => {
+    setLoader(true);
     try {
       const newProduct: Product = {
         id: uuidv4(),
@@ -41,12 +46,15 @@ function App() {
       const productsRef = ref(db, `products/${newProduct.id}`);
       await set(productsRef, newProduct);
       setProducts((prevProducts) => [...prevProducts, newProduct]);
+      setLoader(false);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
 
   const deleteProduct = async (productId: string) => {
+    setLoader(true);
     try {
       const product = ref(db, `products/${productId}`);
 
@@ -54,7 +62,9 @@ function App() {
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product.id !== productId);
       });
+      setLoader(false);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -79,7 +89,7 @@ function App() {
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
         Контроль строків прострочення товара
       </h1>
-      <AddProductPar addProduct={addProduct} />
+      <AddProductPar addProduct={addProduct} loader={loader} />
       {/* <Filter
         filtersProducts={filtersProducts}
         setFilter={setFilter}
