@@ -61,9 +61,18 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
           <p className={css.error}>{errors.name && "введіть товар"}</p>
         </div>
         <div className={css.field}>
+          <span
+            style={{
+              fontSize: "14px",
+              marginRight: "15px",
+              color: "rgb(136, 134, 134)",
+              fontStyle: "italic",
+            }}
+          >
+            Введіть дату
+          </span>
           <input type="date" {...register("date")} />
           <p className={css.error}>{errors.date && "введіть дату"}</p>
-          <span style={{ fontSize: "14px", marginLeft: "15px" }}>Дата</span>
         </div>
         <button type="submit" className={css.btn}>
           Додати
