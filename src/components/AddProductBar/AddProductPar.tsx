@@ -63,7 +63,6 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
         <div className={css.field}>
           <span
             style={{
-              fontSize: "14px",
               marginRight: "15px",
               color: "rgb(136, 134, 134)",
               fontStyle: "italic",
