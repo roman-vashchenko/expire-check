@@ -44,7 +44,7 @@ const Filter: FC<FilterProps> = ({
         Фільтрувати
       </button>
       <button type="button" onClick={() => getProducts()}>
-        Зкинути фільтер
+        Зкинути фільтр
       </button>
     </div>
   );

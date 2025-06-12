@@ -15,7 +15,7 @@ const ProductList: FC<ProductListProps> = ({ products, deleteProduct }) => {
         <thead className={css.title}>
           <tr>
             <th>Артикул</th>
-            <th>Назва товара</th>
+            <th>Товар</th>
             <th>Дата закінчення строку придатності</th>
             <th>Видалити актикул</th>
           </tr>

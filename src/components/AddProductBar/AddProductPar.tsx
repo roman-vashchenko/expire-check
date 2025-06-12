@@ -31,7 +31,6 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -40,7 +39,7 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
     reset();
   };
   return (
-    <div>
+    <div className={css.container}>
       <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <div className={css.field}>
           <input
@@ -48,15 +47,17 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
             {...register("code")}
             placeholder="Введіть акрикул"
           />
-          <p style={{ color: "rgb(216, 0, 39)" }}>{errors.code?.message}</p>
+          <p className={css.error}>
+            {errors.code && "артикул повинен мати 8 символів"}
+          </p>
         </div>
         <div className={css.field}>
           <input
             type="text"
             {...register("name")}
-            placeholder="Введіть назву"
+            placeholder="Введіть товар"
           />
-          <p style={{ color: "rgb(216, 0, 39)" }}>{errors.code?.message}</p>
+          <p className={css.error}>{errors.name && "введіть товар"}</p>
         </div>
         <div className={css.field}>
           <input
@@ -64,7 +65,7 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct }) => {
             {...register("date")}
             placeholder="Дата закінчення строку товара"
           />
-          <p style={{ color: "rgb(216, 0, 39)" }}>{errors.date?.message}</p>
+          <p className={css.error}>{errors.date && "введіть дату"}</p>
         </div>
         <button type="submit" className={css.btn}>
           Додати

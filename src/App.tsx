@@ -5,11 +5,11 @@ import { db } from "./firebase/firebase";
 import { useEffect, useState } from "react";
 import type Product from "./tytes";
 import { v4 as uuidv4 } from "uuid";
-import Filter from "./components/Filter/Filter";
+// import Filter from "./components/Filter/Filter";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filter, setFilter] = useState<string>("");
+  // const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
     getProducts();
@@ -59,30 +59,33 @@ function App() {
     }
   };
 
-  const filtersProducts = (filter: string) => {
-    console.log(filter);
-    const filteredProduct = products.filter((product) => {
-      const now = new Date();
-      const expiry = new Date(product.date);
-      const diff = (expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-      console.log(Math.floor(diff));
+  // const filtersProducts = (filter: string) => {
+  //   console.log(filter);
+  //   const filteredProduct = products.filter((product) => {
+  //     const now = new Date();
+  //     const expiry = new Date(product.date);
+  //     const diff = (expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+  //     console.log(Math.floor(diff));
 
-      if (filter === "expired") return Math.floor(diff) <= 0;
-      if (filter === "soon")
-        return Math.floor(diff) > 0 && Math.floor(diff) <= 30;
-    });
-    setProducts(filteredProduct);
-  };
+  //     if (filter === "expired") return Math.floor(diff) <= 0;
+  //     if (filter === "soon")
+  //       return Math.floor(diff) > 0 && Math.floor(diff) <= 30;
+  //   });
+  //   setProducts(filteredProduct);
+  // };
 
   return (
     <div>
+      <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
+        Контроль строків прострочення товара
+      </h1>
       <AddProductPar addProduct={addProduct} />
-      <Filter
+      {/* <Filter
         filtersProducts={filtersProducts}
         setFilter={setFilter}
         filter={filter}
         getProducts={getProducts}
-      />
+      /> */}
       <ProductList products={products} deleteProduct={deleteProduct} />
     </div>
   );
