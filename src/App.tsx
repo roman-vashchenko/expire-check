@@ -24,7 +24,6 @@ function App() {
       const data = snapshot.val();
       const exists: Product[] = data ? Object.values(data) : [];
       setProducts(exists);
-      console.log(exists);
       setLoader(false);
     } catch (error) {
       console.log(error);
