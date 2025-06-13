@@ -1,5 +1,5 @@
 import { get, ref, remove, set } from "firebase/database";
-import AddProductPar from "./components/AddProductBar/AddProductPar";
+import AddProductBar from "./components/AddProductBar/AddProductBar";
 import ProductList from "./components/ProductList/ProductList";
 import { db } from "./firebase/firebase";
 import { useEffect, useState } from "react";
@@ -88,7 +88,7 @@ function App() {
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
         Контроль прострочення товарів
       </h1>
-      <AddProductPar addProduct={addProduct} loader={loader} />
+      <AddProductBar addProduct={addProduct} loader={loader} />
       {/* <Filter
         filtersProducts={filtersProducts}
         setFilter={setFilter}

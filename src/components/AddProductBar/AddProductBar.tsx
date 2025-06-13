@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import css from "./AddProductBar.module.css";
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 
 interface FormValues {
   code: string;
@@ -24,18 +24,23 @@ const schema = yup
   })
   .required();
 
-const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
+const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    const defaultDate: string = new Date().toISOString().split("T")[0];
+    setValue("date", defaultDate);
+  }, [setValue]);
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
     addProduct(data);
     reset();
   };
@@ -61,15 +66,6 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
           <p className={css.error}>{errors.name && "введіть товар"}</p>
         </div>
         <div className={css.field}>
-          <span
-            style={{
-              marginRight: "15px",
-              color: "rgb(136, 134, 134)",
-              fontStyle: "italic",
-            }}
-          >
-            Введіть дату
-          </span>
           <input type="date" {...register("date")} />
           <p className={css.error}>{errors.date && "введіть дату"}</p>
         </div>
@@ -82,4 +78,4 @@ const AddProductPar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
   );
 };
 
-export default AddProductPar;
+export default AddProductBar;
