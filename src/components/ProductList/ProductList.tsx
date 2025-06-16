@@ -4,11 +4,14 @@ import ProductItem from "../ProductItem/ProductItem";
 import css from "./ProductList.module.css";
 
 interface ProductListProps {
-  products: Product[];
+  filteredProducts: Product[];
   deleteProduct: (productId: string) => Promise<void>;
 }
 
-const ProductList: FC<ProductListProps> = ({ products, deleteProduct }) => {
+const ProductList: FC<ProductListProps> = ({
+  filteredProducts,
+  deleteProduct,
+}) => {
   return (
     <div>
       <table className={css.table}>
@@ -21,8 +24,8 @@ const ProductList: FC<ProductListProps> = ({ products, deleteProduct }) => {
           </tr>
         </thead>
         <tbody>
-          {products.length > 0 &&
-            products.map((product) => (
+          {filteredProducts.length > 0 &&
+            filteredProducts.map((product) => (
               <tr key={product.id} className={css.item}>
                 <ProductItem product={product} deleteProduct={deleteProduct} />
               </tr>

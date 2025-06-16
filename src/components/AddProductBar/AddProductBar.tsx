@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import css from "./AddProductBar.module.css";
-import { useEffect, type FC } from "react";
+import { type FC } from "react";
 
 interface FormValues {
   code: string;
@@ -24,21 +24,20 @@ const schema = yup
   })
   .required();
 
+const defaultDate: string = new Date().toISOString().split("T")[0];
+
 const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      date: defaultDate,
+    },
   });
-
-  useEffect(() => {
-    const defaultDate: string = new Date().toISOString().split("T")[0];
-    setValue("date", defaultDate);
-  }, [setValue]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     addProduct(data);
@@ -73,7 +72,7 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
           Додати
         </button>
       </form>
-      {loader && <p className={css.loader}>Завантаження...</p>}
+      {loader && <b className={css.loader}>Завантаження...</b>}
     </div>
   );
 };

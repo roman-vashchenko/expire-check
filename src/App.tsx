@@ -5,12 +5,14 @@ import { db } from "./firebase/firebase";
 import { useEffect, useState } from "react";
 import type Product from "./tytes";
 import { v4 as uuidv4 } from "uuid";
-// import Filter from "./components/Filter/Filter";
+import Filter from "./components/Filter/Filter";
+import { getDiff } from "./helpers";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loader, setLoader] = useState<boolean>(true);
-  // const [filter, setFilter] = useState<string>("");
+  const [loader, setLoader] = useState<boolean>(false);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     getProducts();
@@ -24,6 +26,7 @@ function App() {
       const data = snapshot.val();
       const exists: Product[] = data ? Object.values(data) : [];
       setProducts(exists);
+      setFilteredProducts(exists);
       setLoader(false);
     } catch (error) {
       console.log(error);
@@ -45,7 +48,14 @@ function App() {
       const productsRef = ref(db, `products/${newProduct.id}`);
       await set(productsRef, newProduct);
       setProducts((prevProducts) => [...prevProducts, newProduct]);
+      setFilteredProducts((prevProducts) => [...prevProducts, newProduct]);
       setLoader(false);
+      toast.success("Артикул додано", {
+        iconTheme: {
+          primary: "rgb(118, 181, 204)",
+          secondary: "#FFFAEE",
+        },
+      });
     } catch (error) {
       setLoader(false);
       console.log(error);
@@ -61,41 +71,46 @@ function App() {
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product.id !== productId);
       });
+      setFilteredProducts((prevProducts) => {
+        return prevProducts.filter((product) => product.id !== productId);
+      });
       setLoader(false);
+      toast.success("Артикул видалено", {
+        iconTheme: {
+          primary: "rgb(118, 181, 204)",
+          secondary: "#FFFAEE",
+        },
+      });
     } catch (error) {
       setLoader(false);
       console.log(error);
     }
   };
 
-  // const filtersProducts = (filter: string) => {
-  //   console.log(filter);
-  //   const filteredProduct = products.filter((product) => {
-  //     const now = new Date();
-  //     const expiry = new Date(product.date);
-  //     const diff = (expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-  //     console.log(Math.floor(diff));
+  const filtersProducts = (filter: string) => {
+    const copyArray = [...products];
+    const filteredProduct = copyArray.filter((product) => {
+      const number = getDiff(product.date);
 
-  //     if (filter === "expired") return Math.floor(diff) <= 0;
-  //     if (filter === "soon")
-  //       return Math.floor(diff) > 0 && Math.floor(diff) <= 30;
-  //   });
-  //   setProducts(filteredProduct);
-  // };
+      if (filter === "expired") return number <= 0;
+      if (filter === "soon") return number > 0 && number <= 30;
+      if (filter === "all") return true;
+    });
+    setFilteredProducts(filteredProduct);
+  };
 
   return (
     <div>
+      <Toaster position="top-right" reverseOrder={false} />
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
         Контроль прострочення товарів
       </h1>
       <AddProductBar addProduct={addProduct} loader={loader} />
-      {/* <Filter
-        filtersProducts={filtersProducts}
-        setFilter={setFilter}
-        filter={filter}
-        getProducts={getProducts}
-      /> */}
-      <ProductList products={products} deleteProduct={deleteProduct} />
+      <Filter filtersProducts={filtersProducts} />
+      <ProductList
+        filteredProducts={filteredProducts}
+        deleteProduct={deleteProduct}
+      />
     </div>
   );
 }

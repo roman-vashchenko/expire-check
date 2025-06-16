@@ -2,7 +2,8 @@
   position: relative;
   background-color: rgb(156, 217, 253);
 
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .form {
@@ -57,12 +58,14 @@
 }
 
 .loader {
+  font-size: 20px;
   position: absolute;
-  top: 105%;
-  left: 38%;
+  top: 153%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .form {
     flex-direction: row;
     gap: 35px;
@@ -74,7 +77,8 @@
   }
   .loader {
     position: absolute;
-    top: 112%;
-    left: 43%;
+    top: 220%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
