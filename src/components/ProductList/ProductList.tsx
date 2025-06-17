@@ -2,6 +2,7 @@ import type { FC } from "react";
 import type Product from "../../tytes";
 import ProductItem from "../ProductItem/ProductItem";
 import css from "./ProductList.module.css";
+import { getStatusColor } from "../../helpers";
 
 interface ProductListProps {
   filteredProducts: Product[];
@@ -26,7 +27,11 @@ const ProductList: FC<ProductListProps> = ({
         <tbody>
           {filteredProducts.length > 0 &&
             filteredProducts.map((product) => (
-              <tr key={product.id} className={css.item}>
+              <tr
+                key={product.id}
+                className={css.item}
+                style={{ backgroundColor: `${getStatusColor(product.date)}` }}
+              >
                 <ProductItem product={product} deleteProduct={deleteProduct} />
               </tr>
             ))}

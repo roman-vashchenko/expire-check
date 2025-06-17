@@ -1,21 +1,20 @@
-import { useState, type ChangeEvent, type FC } from "react";
+import { type ChangeEvent, type FC } from "react";
 import css from "./Filter.module.css";
 import Radio from "@mui/material/Radio";
 
 interface FilterProps {
-  filtersProducts: (filter: string) => void;
+  setSelectedFilter: (filter: string) => void;
+  selectedFilter: string;
 }
 
-const Filter: FC<FilterProps> = ({ filtersProducts }) => {
-  const [selectedValue, setSelectedValue] = useState("all");
+const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
   return (
     <div className={css.filter}>
       <div className={css.field}>
         <Radio
-          checked={selectedValue === "all"}
+          checked={selectedFilter === "all"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedValue(e.target.value);
-            filtersProducts(e.target.value);
+            setSelectedFilter(e.target.value);
           }}
           value="all"
           name="radio-buttons"
@@ -25,10 +24,9 @@ const Filter: FC<FilterProps> = ({ filtersProducts }) => {
       </div>
       <div className={css.field}>
         <Radio
-          checked={selectedValue === "soon"}
+          checked={selectedFilter === "soon"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedValue(e.target.value);
-            filtersProducts(e.target.value);
+            setSelectedFilter(e.target.value);
           }}
           value="soon"
           name="radio-buttons"
@@ -40,10 +38,9 @@ const Filter: FC<FilterProps> = ({ filtersProducts }) => {
       </div>
       <div className={css.field}>
         <Radio
-          checked={selectedValue === "expired"}
+          checked={selectedFilter === "expired"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedValue(e.target.value);
-            filtersProducts(e.target.value);
+            setSelectedFilter(e.target.value);
           }}
           value="expired"
           name="radio-buttons"

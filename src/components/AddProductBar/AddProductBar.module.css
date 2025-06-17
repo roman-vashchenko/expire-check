@@ -77,7 +77,7 @@
   }
   .loader {
     position: absolute;
-    top: 220%;
+    top: 158%;
     left: 50%;
     transform: translateX(-50%);
   }

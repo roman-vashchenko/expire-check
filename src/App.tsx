@@ -12,11 +12,26 @@ import toast, { Toaster } from "react-hot-toast";
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     getProducts();
   }, []);
+
+  useEffect(() => {
+    const filteredProduct = products.filter((product) => {
+      const number = getDiff(product.date);
+
+      if (selectedFilter === "expired") return number <= 0;
+      if (selectedFilter === "soon") return number > 0 && number <= 30;
+      if (selectedFilter === "all") return true;
+
+      return false;
+    });
+
+    setFilteredProducts(filteredProduct);
+  }, [products, selectedFilter]);
 
   const getProducts = async (): Promise<void> => {
     setLoader(true);
@@ -26,7 +41,6 @@ function App() {
       const data = snapshot.val();
       const exists: Product[] = data ? Object.values(data) : [];
       setProducts(exists);
-      setFilteredProducts(exists);
       setLoader(false);
     } catch (error) {
       console.log(error);
@@ -48,7 +62,6 @@ function App() {
       const productsRef = ref(db, `products/${newProduct.id}`);
       await set(productsRef, newProduct);
       setProducts((prevProducts) => [...prevProducts, newProduct]);
-      setFilteredProducts((prevProducts) => [...prevProducts, newProduct]);
       setLoader(false);
       toast.success("Артикул додано", {
         iconTheme: {
@@ -71,9 +84,6 @@ function App() {
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product.id !== productId);
       });
-      setFilteredProducts((prevProducts) => {
-        return prevProducts.filter((product) => product.id !== productId);
-      });
       setLoader(false);
       toast.success("Артикул видалено", {
         iconTheme: {
@@ -87,18 +97,6 @@ function App() {
     }
   };
 
-  const filtersProducts = (filter: string) => {
-    const copyArray = [...products];
-    const filteredProduct = copyArray.filter((product) => {
-      const number = getDiff(product.date);
-
-      if (filter === "expired") return number <= 0;
-      if (filter === "soon") return number > 0 && number <= 30;
-      if (filter === "all") return true;
-    });
-    setFilteredProducts(filteredProduct);
-  };
-
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
@@ -106,7 +104,10 @@ function App() {
         Контроль прострочення товарів
       </h1>
       <AddProductBar addProduct={addProduct} loader={loader} />
-      <Filter filtersProducts={filtersProducts} />
+      <Filter
+        setSelectedFilter={setSelectedFilter}
+        selectedFilter={selectedFilter}
+      />
       <ProductList
         filteredProducts={filteredProducts}
         deleteProduct={deleteProduct}

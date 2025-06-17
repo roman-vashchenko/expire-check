@@ -11,6 +11,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-color: transparent;
+  background-color: transparent;
 }
 
 @media (min-width: 768px) {

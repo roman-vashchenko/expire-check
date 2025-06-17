@@ -66,7 +66,6 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
         </div>
         <div className={css.field}>
           <input type="date" {...register("date")} />
-          <p className={css.error}>{errors.date && "введіть дату"}</p>
         </div>
         <button type="submit" className={css.btn}>
           Додати
