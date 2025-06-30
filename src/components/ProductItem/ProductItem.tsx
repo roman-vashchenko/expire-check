@@ -6,10 +6,15 @@ import { MdDelete } from "react-icons/md";
 
 interface ProductItemProps {
   product: Product;
-  deleteProduct: (productId: string) => Promise<void>;
+  openModal: () => void;
+  setProduct: (product: Product) => void;
 }
 
-const ProductItem: FC<ProductItemProps> = ({ product, deleteProduct }) => {
+const ProductItem: FC<ProductItemProps> = ({
+  product,
+  openModal,
+  setProduct,
+}) => {
   return (
     <>
       <td className={css.item}>{product.code}</td>
@@ -20,7 +25,8 @@ const ProductItem: FC<ProductItemProps> = ({ product, deleteProduct }) => {
           type="button"
           className={css.btn}
           onClick={() => {
-            deleteProduct(product.id);
+            openModal();
+            setProduct(product);
           }}
         >
           <MdDelete />

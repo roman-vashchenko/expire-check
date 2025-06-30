@@ -6,12 +6,14 @@ import { getStatusColor } from "../../helpers";
 
 interface ProductListProps {
   filteredProducts: Product[];
-  deleteProduct: (productId: string) => Promise<void>;
+  openModal: () => void;
+  setProduct: (product: Product) => void;
 }
 
 const ProductList: FC<ProductListProps> = ({
+  openModal,
   filteredProducts,
-  deleteProduct,
+  setProduct,
 }) => {
   return (
     <div>
@@ -32,7 +34,11 @@ const ProductList: FC<ProductListProps> = ({
                 className={css.item}
                 style={{ backgroundColor: `${getStatusColor(product.date)}` }}
               >
-                <ProductItem product={product} deleteProduct={deleteProduct} />
+                <ProductItem
+                  product={product}
+                  openModal={openModal}
+                  setProduct={setProduct}
+                />
               </tr>
             ))}
         </tbody>

@@ -8,10 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 import Filter from "./components/Filter/Filter";
 import { getDiff } from "./helpers";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [product, setProduct] = useState<Product | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
@@ -81,6 +84,7 @@ function App() {
       const product = ref(db, `products/${productId}`);
 
       await remove(product);
+      handleCloseModal();
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product.id !== productId);
       });
@@ -97,6 +101,14 @@ function App() {
     }
   };
 
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div>
       <Toaster position="top-right" reverseOrder={false} />
@@ -109,9 +121,18 @@ function App() {
         selectedFilter={selectedFilter}
       />
       <ProductList
+        openModal={handleOpenModal}
         filteredProducts={filteredProducts}
-        deleteProduct={deleteProduct}
+        setProduct={setProduct}
       />
+      {isOpen && (
+        <Modal
+          isOpen
+          onClose={handleCloseModal}
+          deleteProduct={deleteProduct}
+          product={product}
+        />
+      )}
     </div>
   );
 }
