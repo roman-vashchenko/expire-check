@@ -3,9 +3,14 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import css from "./SearchBar.module.css";
+import type { FC } from "react";
 
 interface FormValues {
   code: string;
+}
+
+interface SearchBarProps {
+  getProduct: (code: string) => Promise<void>;
 }
 
 const schema = yup
@@ -14,7 +19,7 @@ const schema = yup
   })
   .required();
 
-const SearchBar = () => {
+const SearchBar: FC<SearchBarProps> = ({ getProduct }) => {
   const {
     register,
     handleSubmit,
@@ -26,6 +31,7 @@ const SearchBar = () => {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data.code);
+    getProduct(data.code);
     reset();
   };
   return (
@@ -37,7 +43,7 @@ const SearchBar = () => {
             {...register("code")}
             placeholder="Введіть артикул"
           />
-          <p className={css.error}>{errors.code && "введіть товар"}</p>
+          <p className={css.error}>{errors.code && "помилка"}</p>
         </div>
         <button type="submit" className={css.btn}>
           Пошук

@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import type Product from "../../tytes";
+import type Product from "../../types";
 import css from "./ProductItem.module.css";
 import { formattedDate } from "../../helpers";
 import { MdDelete } from "react-icons/md";

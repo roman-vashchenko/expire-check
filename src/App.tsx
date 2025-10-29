@@ -3,17 +3,21 @@ import { get, ref, remove, set } from "firebase/database";
 import ProductList from "./components/ProductList/ProductList";
 import { db } from "./firebase/firebase";
 import { useEffect, useState } from "react";
-import type Product from "./tytes";
+import type Product from "./types";
+import type MainProduct from "./types";
 import { v4 as uuidv4 } from "uuid";
 import Filter from "./components/Filter/Filter";
 import { getDiff } from "./helpers";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "./components/Modal/Modal";
 import SearchBar from "./components/SearchBar/SearchBar";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [product, setProduct] = useState<Product | null>(null);
+  const [mainProduct, setMainProduct] = useState<MainProduct | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
@@ -36,6 +40,24 @@ function App() {
 
     setFilteredProducts(filteredProduct);
   }, [products, selectedFilter]);
+
+  const getProduct = async (code: string): Promise<void> => {
+    setLoader(true);
+    try {
+      const product = ref(db, `allProducts/${code}`);
+      const snapshot = await get(product);
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        setMainProduct(snapshot.val());
+      } else {
+        setMainProduct(null);
+      }
+      setLoader(false);
+    } catch (error) {
+      console.log(error);
+      setLoader(false);
+    }
+  };
 
   const getProducts = async (): Promise<void> => {
     setLoader(true);
@@ -70,7 +92,7 @@ function App() {
       toast.success("Артикул додано", {
         iconTheme: {
           primary: "rgb(118, 181, 204)",
-          secondary: "#FFFAEE",
+          secondary: "#2196f3",
         },
       });
     } catch (error) {
@@ -93,7 +115,7 @@ function App() {
       toast.success("Артикул видалено", {
         iconTheme: {
           primary: "rgb(118, 181, 204)",
-          secondary: "#FFFAEE",
+          secondary: "#2196f3",
         },
       });
     } catch (error) {
@@ -117,16 +139,24 @@ function App() {
         Контроль прострочення товарів
       </h1>
       {/* <AddProductBar addProduct={addProduct} loader={loader} /> */}
-      <SearchBar />
+      <SearchBar getProduct={getProduct} />
       <Filter
         setSelectedFilter={setSelectedFilter}
         selectedFilter={selectedFilter}
       />
-      <ProductList
-        openModal={handleOpenModal}
-        filteredProducts={filteredProducts}
-        setProduct={setProduct}
-      />
+      {loader ? (
+        <Box
+          sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+        >
+          <CircularProgress color="primary" size={40} thickness={5} />
+        </Box>
+      ) : (
+        <ProductList
+          openModal={handleOpenModal}
+          filteredProducts={filteredProducts}
+          setProduct={setProduct}
+        />
+      )}
       {isOpen && (
         <Modal
           isOpen

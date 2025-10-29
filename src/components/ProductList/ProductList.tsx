@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type Product from "../../tytes";
+import type Product from "../../types";
 import ProductItem from "../ProductItem/ProductItem";
 import css from "./ProductList.module.css";
 import { getStatusColor } from "../../helpers";
@@ -43,6 +43,11 @@ const ProductList: FC<ProductListProps> = ({
             ))}
         </tbody>
       </table>
+      {filteredProducts.length === 0 && (
+        <p style={{ marginTop: "10px", textAlign: "center" }}>
+          Данні не знайдено
+        </p>
+      )}
     </div>
   );
 };
