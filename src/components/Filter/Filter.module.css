@@ -6,13 +6,15 @@
   margin-bottom: 10px;
   font-size: 14px;
   border-radius: 5px;
-  margin-bottom: 50px;
 }
 
 .field {
   display: flex;
   align-items: center;
-  height: 30px;
+}
+
+.field:not(:last-child) {
+  margin-bottom: 3px;
 }
 
 @media (min-width: 768px) {

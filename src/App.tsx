@@ -1,5 +1,5 @@
 import { get, ref, remove, set } from "firebase/database";
-import AddProductBar from "./components/AddProductBar/AddProductBar";
+// import AddProductBar from "./components/AddProductBar/AddProductBar";
 import ProductList from "./components/ProductList/ProductList";
 import { db } from "./firebase/firebase";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import Filter from "./components/Filter/Filter";
 import { getDiff } from "./helpers";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "./components/Modal/Modal";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -113,9 +114,10 @@ function App() {
     <div>
       <Toaster position="top-right" reverseOrder={false} />
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
-        Контроль прострочення товарів!
+        Контроль прострочення товарів
       </h1>
-      <AddProductBar addProduct={addProduct} loader={loader} />
+      {/* <AddProductBar addProduct={addProduct} loader={loader} /> */}
+      <SearchBar />
       <Filter
         setSelectedFilter={setSelectedFilter}
         selectedFilter={selectedFilter}

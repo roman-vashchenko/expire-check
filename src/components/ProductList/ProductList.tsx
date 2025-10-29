@@ -26,7 +26,7 @@ const ProductList: FC<ProductListProps> = ({
             <th>Видалити актикул</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={css.tbody}>
           {filteredProducts.length > 0 &&
             filteredProducts.map((product) => (
               <tr

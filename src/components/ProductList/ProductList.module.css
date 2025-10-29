@@ -2,6 +2,7 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: auto;
+  border-radius: 5px;
 }
 
 .table td,

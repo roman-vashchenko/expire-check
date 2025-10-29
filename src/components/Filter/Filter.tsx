@@ -19,6 +19,13 @@ const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
           value="all"
           name="radio-buttons"
           id="all"
+          sx={{
+            "& .MuiSvgIcon-root": {
+              fontSize: 18,
+            },
+            padding: "1px",
+            marginRight: "7px",
+          }}
         />
         <label htmlFor="all">Всі</label>
       </div>
@@ -31,6 +38,13 @@ const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
           value="soon"
           name="radio-buttons"
           id="soon"
+          sx={{
+            "& .MuiSvgIcon-root": {
+              fontSize: 18,
+            },
+            padding: "1px",
+            marginRight: "7px",
+          }}
         />
         <label htmlFor="soon">
           Незабаром закінчиться строк (30 днів і менше)
@@ -45,6 +59,13 @@ const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
           value="expired"
           name="radio-buttons"
           id="expired"
+          sx={{
+            "& .MuiSvgIcon-root": {
+              fontSize: 18,
+            },
+            padding: "1px",
+            marginRight: "7px",
+          }}
         />
         <label htmlFor="expired">Прострочений товар</label>
       </div>
