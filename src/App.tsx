@@ -113,7 +113,7 @@ function App() {
     <div>
       <Toaster position="top-right" reverseOrder={false} />
       <h1 style={{ fontSize: "25px", marginBottom: "15px" }}>
-        Контроль прострочення товарів
+        Контроль прострочення товарів!
       </h1>
       <AddProductBar addProduct={addProduct} loader={loader} />
       <Filter
