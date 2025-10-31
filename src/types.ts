@@ -1,11 +1,15 @@
-export default interface MainProduct {
+interface MainProduct {
   code: string;
   name: string;
 }
 
-export default interface Product {
+interface Product {
   id: string;
   name: string;
   code: string;
   date: string;
 }
+
+type newProduct = Omit<Product, "id">;
+
+export type { MainProduct, Product, newProduct };

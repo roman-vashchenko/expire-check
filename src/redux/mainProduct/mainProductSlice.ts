@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Product } from "../../types";
+import type { MainProduct } from "../../types";
 
 interface ProductsState {
-  items: Product[];
+  product: MainProduct | null;
   isLoader: boolean;
   error: null;
 }
 
 const initialState: ProductsState = {
-  items: [],
+  product: null,
   isLoader: false,
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: "products",
+const mainProductSlice = createSlice({
+  name: "mainProduct",
   initialState,
   reducers: {},
 });
 
-export const productsReducer = productsSlice.reducer;
+export const mainProductReducer = mainProductSlice.reducer;

@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
 import css from "./Modal.module.css";
 import type { FC } from "react";
-import type Product from "../../types";
+import type { Product } from "../../types";
 
 ReactModal.setAppElement("#root");
 
