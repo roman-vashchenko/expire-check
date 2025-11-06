@@ -8,14 +8,15 @@ export const selectIsLoader = (state: RootState) => state.products.isLoader;
 export const selectFilteredProducts = createSelector(
   [selectProducts, selectFilter],
   (products, filter) => {
-    return products.filter((product) => {
-      const number = getDiff(product.date);
+    if (products)
+      return products.filter((product) => {
+        const number = getDiff(product.date);
 
-      if (filter === "expired") return number <= 0;
-      if (filter === "soon") return number > 0 && number <= 30;
-      if (filter === "all") return true;
+        if (filter === "expired") return number <= 0;
+        if (filter === "soon") return number > 0 && number <= 30;
+        if (filter === "all") return true;
 
-      return false;
-    });
+        return false;
+      });
   }
 );

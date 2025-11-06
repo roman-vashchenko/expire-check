@@ -1,5 +1,5 @@
 import ReactModal from "react-modal";
-import css from "./Modal.module.css";
+import css from "./DeleteModal.module.css";
 import type { FC } from "react";
 import type { Product } from "../../types";
 
@@ -8,11 +8,10 @@ ReactModal.setAppElement("#root");
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  deleteProduct: (productId: string) => Promise<void>;
   product: Product | null;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, deleteProduct, product }) => {
+const DeleteModal: FC<ModalProps> = ({ isOpen, onClose, product }) => {
   return (
     <div>
       <ReactModal
@@ -21,16 +20,11 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, deleteProduct, product }) => {
         className={css.modal}
         overlayClassName={css.overlay}
         bodyOpenClassName={null}
+        ariaHideApp={false}
       >
         <p className={css.text}>{product?.name}</p>
         <div className={css.wrapper}>
-          <button
-            className={css.btn}
-            type="button"
-            onClick={() => {
-              if (product) deleteProduct(product.id);
-            }}
-          >
+          <button className={css.btn} type="button" onClick={() => {}}>
             Видалити
           </button>
           <button type="button" onClick={onClose} className={css.btn}>
@@ -42,4 +36,4 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, deleteProduct, product }) => {
   );
 };
 
-export default Modal;
+export default DeleteModal;

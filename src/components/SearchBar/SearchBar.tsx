@@ -3,15 +3,16 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import css from "./SearchBar.module.css";
-import type { FC } from "react";
+import { useAppDispatch } from "../../hooks";
+import { getMainProduct } from "../../redux/mainProduct/operations";
 
 interface FormValues {
   code: string;
 }
 
-interface SearchBarProps {
-  getProduct: (code: string) => Promise<void>;
-}
+// interface SearchBarProps {
+//   getProduct: (code: string) => Promise<void>;
+// }
 
 const schema = yup
   .object({
@@ -19,7 +20,8 @@ const schema = yup
   })
   .required();
 
-const SearchBar: FC<SearchBarProps> = ({ getProduct }) => {
+const SearchBar = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ const SearchBar: FC<SearchBarProps> = ({ getProduct }) => {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data.code);
-    getProduct(data.code);
+    dispatch(getMainProduct(data.code));
     reset();
   };
   return (

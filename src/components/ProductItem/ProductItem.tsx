@@ -1,8 +1,8 @@
 import { type FC } from "react";
-import type Product from "../../types";
 import css from "./ProductItem.module.css";
 import { formattedDate } from "../../helpers";
 import { MdDelete } from "react-icons/md";
+import type { Product } from "../../types";
 
 interface ProductItemProps {
   product: Product;
@@ -10,11 +10,7 @@ interface ProductItemProps {
   setProduct: (product: Product) => void;
 }
 
-const ProductItem: FC<ProductItemProps> = ({
-  product,
-  openModal,
-  setProduct,
-}) => {
+const ProductItem: FC<ProductItemProps> = ({ product, openModal }) => {
   return (
     <>
       <td className={css.item}>{product.code}</td>
@@ -26,7 +22,6 @@ const ProductItem: FC<ProductItemProps> = ({
           className={css.btn}
           onClick={() => {
             openModal();
-            setProduct(product);
           }}
         >
           <MdDelete />
