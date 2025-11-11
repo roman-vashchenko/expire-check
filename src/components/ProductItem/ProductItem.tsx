@@ -6,11 +6,15 @@ import type { Product } from "../../types";
 
 interface ProductItemProps {
   product: Product;
-  openModal: () => void;
+  openModal: (type: string) => void;
   setProduct: (product: Product) => void;
 }
 
-const ProductItem: FC<ProductItemProps> = ({ product, openModal }) => {
+const ProductItem: FC<ProductItemProps> = ({
+  product,
+  openModal,
+  setProduct,
+}) => {
   return (
     <>
       <td className={css.item}>{product.code}</td>
@@ -21,7 +25,8 @@ const ProductItem: FC<ProductItemProps> = ({ product, openModal }) => {
           type="button"
           className={css.btn}
           onClick={() => {
-            openModal();
+            setProduct(product);
+            openModal("delete");
           }}
         >
           <MdDelete />

@@ -1,17 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface FilterState {
-  name: string;
-}
+type FilterName = "all" | "soon" | "expired";
 
-const initialState: FilterState = {
-  name: "all",
-};
+const initialState = "all" as FilterName;
 
 const filtersSlice = createSlice({
   name: "filter",
   initialState,
-  reducers: {},
+  reducers: {
+    changeFilter: (_state, { payload }: PayloadAction<FilterName>) => {
+      return payload;
+    },
+  },
 });
 
+export const { changeFilter } = filtersSlice.actions;
 export const filterRducer = filtersSlice.reducer;

@@ -2,8 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
-import css from "./AddProductBar.module.css";
-import { type FC } from "react";
+import css from "./AddProductForm.module.css";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { addProduct } from "../../redux/products/operations";
+import { selectMainProduct } from "../../redux/mainProduct/selectors";
+import { useEffect } from "react";
+import { resetMainProduct } from "../../redux/mainProduct/mainProductSlice";
 
 interface FormValues {
   code: string;
@@ -11,10 +15,10 @@ interface FormValues {
   date: string;
 }
 
-interface AddProductBarProps {
-  addProduct: (data: { code: string; name: string; date: string }) => void;
-  loader: boolean;
-}
+// interface AddProductFormProps {
+//   addProduct: (data: { code: string; name: string; date: string }) => void;
+//   loader: boolean;
+// }
 
 const schema = yup
   .object({
@@ -26,11 +30,14 @@ const schema = yup
 
 const defaultDate: string = new Date().toISOString().split("T")[0];
 
-const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
+const AddProductForm = () => {
+  const dispatch = useAppDispatch();
+  const mainProduct = useAppSelector(selectMainProduct);
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -39,8 +46,16 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
     },
   });
 
+  useEffect(() => {
+    if (mainProduct) {
+      setValue("code", mainProduct.code);
+      setValue("name", mainProduct.name);
+    }
+  }, [mainProduct, setValue]);
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    addProduct(data);
+    dispatch(addProduct(data));
+    dispatch(resetMainProduct());
     reset();
   };
   return (
@@ -51,6 +66,7 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
             type="number"
             {...register("code")}
             placeholder="Введіть акрикул"
+            readOnly
           />
           <p className={css.error}>
             {errors.code && "артикул повинен мати 8 символів"}
@@ -61,6 +77,7 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
             type="text"
             {...register("name")}
             placeholder="Введіть товар"
+            readOnly
           />
           <p className={css.error}>{errors.name && "введіть товар"}</p>
         </div>
@@ -71,9 +88,9 @@ const AddProductBar: FC<AddProductBarProps> = ({ addProduct, loader }) => {
           Додати
         </button>
       </form>
-      {loader && <b className={css.loader}>Завантаження...</b>}
+      {/* {loader && <b className={css.loader}>Завантаження...</b>} */}
     </div>
   );
 };
 
-export default AddProductBar;
+export default AddProductForm;

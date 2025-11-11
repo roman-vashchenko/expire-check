@@ -1,0 +1,18 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.modal {
+  position: relative;
+  inset: 0px;
+  width: 300px;
+  padding: 30px;
+  border-radius: 3px;
+  background-color: rgb(156, 217, 253);
+  margin: auto;
+}

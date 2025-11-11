@@ -1,20 +1,26 @@
-import { type ChangeEvent, type FC } from "react";
+import { type ChangeEvent } from "react";
 import css from "./Filter.module.css";
 import Radio from "@mui/material/Radio";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { changeFilter } from "../../redux/filter/filterSlice";
+import { selectFilter } from "../../redux/filter/selectors";
 
-interface FilterProps {
-  setSelectedFilter: (filter: string) => void;
-  selectedFilter: string;
-}
+// interface FilterProps {
+//   setSelectedFilter: (filter: string) => void;
+//   selectedFilter: string;
+// }
 
-const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
+const Filter = () => {
+  const dispatch = useAppDispatch();
+  const filterValue = useAppSelector(selectFilter);
   return (
     <div className={css.filter}>
       <div className={css.field}>
         <Radio
-          checked={selectedFilter === "all"}
+          checked={filterValue === "all"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedFilter(e.target.value);
+            if (e.target.value === "all")
+              dispatch(changeFilter(e.target.value));
           }}
           value="all"
           name="radio-buttons"
@@ -31,9 +37,10 @@ const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
       </div>
       <div className={css.field}>
         <Radio
-          checked={selectedFilter === "soon"}
+          checked={filterValue === "soon"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedFilter(e.target.value);
+            if (e.target.value === "soon")
+              dispatch(changeFilter(e.target.value));
           }}
           value="soon"
           name="radio-buttons"
@@ -52,9 +59,10 @@ const Filter: FC<FilterProps> = ({ setSelectedFilter, selectedFilter }) => {
       </div>
       <div className={css.field}>
         <Radio
-          checked={selectedFilter === "expired"}
+          checked={filterValue === "expired"}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedFilter(e.target.value);
+            if (e.target.value === "expired")
+              dispatch(changeFilter(e.target.value));
           }}
           value="expired"
           name="radio-buttons"

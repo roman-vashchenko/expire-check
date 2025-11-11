@@ -2,17 +2,17 @@ import ProductItem from "../ProductItem/ProductItem";
 import css from "./ProductList.module.css";
 import { getStatusColor } from "../../helpers";
 import { useAppSelector } from "../../hooks";
-import { selectProducts } from "../../redux/products/selectors";
+import { selectFilteredProducts } from "../../redux/products/selectors";
 import type { Product } from "../../types";
 import type { FC } from "react";
 
 interface ProductListProps {
-  openModal: () => void;
+  openModal: (type: string) => void;
   setProduct: (product: Product) => void;
 }
 
 const ProductList: FC<ProductListProps> = ({ openModal, setProduct }) => {
-  const products = useAppSelector(selectProducts);
+  const filteredProducts = useAppSelector(selectFilteredProducts);
 
   return (
     <div>
@@ -26,9 +26,9 @@ const ProductList: FC<ProductListProps> = ({ openModal, setProduct }) => {
           </tr>
         </thead>
         <tbody className={css.tbody}>
-          {products &&
-            products.length > 0 &&
-            products.map((product) => (
+          {filteredProducts &&
+            filteredProducts.length > 0 &&
+            filteredProducts.map((product: Product) => (
               <tr
                 key={product.id}
                 className={css.item}
@@ -43,7 +43,7 @@ const ProductList: FC<ProductListProps> = ({ openModal, setProduct }) => {
             ))}
         </tbody>
       </table>
-      {Array.isArray(products) && products.length === 0 && (
+      {Array.isArray(filteredProducts) && filteredProducts.length === 0 && (
         <p style={{ marginTop: "10px", textAlign: "center" }}>
           Данні не знайдено
         </p>
