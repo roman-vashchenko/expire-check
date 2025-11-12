@@ -62,12 +62,7 @@ function App() {
           product={product}
         />
       )}
-      {mainProduct && (
-        <AddProductModal
-          isOpen={Boolean(mainProduct)}
-          onClose={handleCloseModal}
-        />
-      )}
+      {mainProduct && <AddProductModal isOpen={Boolean(mainProduct)} />}
     </div>
   );
 }

@@ -10,9 +10,21 @@
 .modal {
   position: relative;
   inset: 0px;
-  width: 300px;
-  padding: 30px;
+  width: 85%;
+  padding: 20px 30px;
   border-radius: 3px;
   background-color: rgb(156, 217, 253);
   margin: auto;
+}
+
+.icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon:hover,
+.icon:focus {
+  scale: 1.3;
 }

@@ -45,6 +45,7 @@ export const addProduct = createAsyncThunk(
       if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
+      return rejectWithValue("Unknown error occurred");
     }
   }
 );

@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { MainProduct } from "../../types";
 import { getMainProduct } from "./operations";
+import toast from "react-hot-toast";
 
 interface ProductsState {
   product: MainProduct | null | undefined;
@@ -33,6 +34,14 @@ const mainProductSlice = createSlice({
           state.isLoader = false;
           state.product = payload;
           console.log(state.product);
+          if (payload === null) {
+            toast.success("Товар не знайдено", {
+              iconTheme: {
+                primary: "rgb(118, 181, 204)",
+                secondary: "#2196f3",
+              },
+            });
+          }
         }
       )
       .addCase(getMainProduct.rejected, (state, action) => {

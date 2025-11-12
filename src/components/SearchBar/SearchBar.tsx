@@ -22,12 +22,7 @@ const schema = yup
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const { register, handleSubmit, reset } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
@@ -45,7 +40,6 @@ const SearchBar = () => {
             {...register("code")}
             placeholder="Введіть артикул"
           />
-          <p className={css.error}>{errors.code && "помилка"}</p>
         </div>
         <button type="submit" className={css.btn}>
           Пошук

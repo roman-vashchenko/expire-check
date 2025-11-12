@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Product } from "../../types";
-import { getProducts } from "./operations";
+import { addProduct, deleteProduct, getProducts } from "./operations";
 
 interface ProductsState {
   items: Product[] | undefined;
@@ -32,6 +32,38 @@ const productsSlice = createSlice({
       )
       .addCase(getProducts.rejected, (state, action) => {
         state.isLoader = false;
+        if (action.payload === "string") {
+          state.error = action.payload;
+        }
+      })
+      .addCase(
+        addProduct.fulfilled,
+        (state, { payload }: PayloadAction<Product>) => {
+          state.isLoader = false;
+          if (state.items) {
+            state.items.push(payload);
+          }
+        }
+      )
+      .addCase(addProduct.rejected, (state, action) => {
+        if (action.payload === "string") {
+          state.error = action.payload;
+        }
+      })
+      .addCase(deleteProduct.fulfilled, (state, { meta }) => {
+        const productIdToDelete = meta.arg;
+
+        if (state.items) {
+          const index = state.items.findIndex(
+            (product) => product.id === productIdToDelete
+          );
+
+          if (index !== -1) {
+            state.items.splice(index, 1);
+          }
+        }
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
         if (action.payload === "string") {
           state.error = action.payload;
         }
